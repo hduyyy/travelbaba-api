@@ -1,0 +1,52 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+.side-content{
+    position: fixed;
+    top: 0;
+    left: -500px;
+    padding: 15px;
+    margin-right: 10px;
+    width: 350px;
+    transition: left 0.3 ease;
+
+}
+
+.a1{
+    font-size: 25px;
+    color: #11aae1;
+    margin: 15px;
+
+}
+.main-container{   
+
+    width: 100%;
+    transition: margin-left 0.3s ease;
+}
+.main-menu{
+    padding: 15px;
+    box-shadow: 0px 1px 14px rgb(107, 111, 111);
+    display: flex;
+    justify-content: space-between;
+    border-radius: 8px;
+}
+.ad-bar{
+    padding: 10px;
+}
+.ad-bell{
+    padding-right: 20px;
+}
+.ad-label{
+    color: rgb(9, 160, 241);
+    text-decoration: none;
+}
+.menu-bar{
+    display: flex;
+}
+.main-content{
+    margin: 15px;
+    width: 90%;
+    border: 1px solid rgb(71, 69, 69);
+    border-radius: 8px;
+}
