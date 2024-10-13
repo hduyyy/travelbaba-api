@@ -1,5 +1,10 @@
 const express = require('express');
 const router = express.Router();
 const answercontroller=require('../controller/answers.controller');
-    router.get('/api/answers',answercontroller.getAllAnswers);
+    router.get('/api/answers/',answercontroller.getAllAnswers);
+    router.get('/api/answers/:id',answercontroller.getallanswersbyId);
+    router.get('/api/answers/search',answercontroller.getallanswersbyText);
+    router.post('/api/answers/',answercontroller.addanswers);
+    router.put('/api/answers/:id',answercontroller.updateAnswer);
+    router.delete('/api/answers/:id',answercontroller.deleteAnswer);
 module.exports=router;
