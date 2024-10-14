@@ -119,4 +119,15 @@ const deleteuser=(user_id,callback)=>{
         
     });
 };
-module.exports={getallusers,getallusersbyId,adduser,updateuser,deleteuser,getallusersbyphone,getallusersbyusername,getallusersbyFreshtoken,getallusersbyemail,updateRefreshToken,getusersbyuser_nameemail,updatePassword};
+const findfullname=(full_name,callback)=>{
+    const query='select * from users where full_name like ?';
+    db.query(query,[`%${full_name}%`],(err,result)=>{
+        if(err)
+        {
+            return callback(err,null);
+        }
+        return callback(null,result);
+
+    })
+}
+module.exports={getallusers,getallusersbyId,adduser,updateuser,deleteuser,getallusersbyphone,getallusersbyusername,getallusersbyFreshtoken,getallusersbyemail,updateRefreshToken,getusersbyuser_nameemail,updatePassword,findfullname};

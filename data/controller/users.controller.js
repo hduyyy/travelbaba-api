@@ -92,4 +92,18 @@ const deleteusers=(req,res)=>{
         res.status(201).json({message:'Delete users Successfull',result});
     });
 };
-module.exports={getallusers,getalluserssbyId,addusers,updateusers,deleteusers,getalluserssbyphone};
+const Findfullname=(req,res)=>{
+    const {full_name}=req.body;
+    if(!full_name)
+    {
+        return res.status(404).json({code:404, message: "error while input fullname" });
+    }
+    usersmodule.findfullname(full_name,(err,result)=>{
+        if(err)
+        {
+            return res.status(500).json({code:500, message: "Error find fullname", error:err });
+        }
+        return res.status(201).json({code:201,message:'Find success', data:result});
+    })
+}
+module.exports={getallusers,getalluserssbyId,addusers,updateusers,deleteusers,getalluserssbyphone,Findfullname};
