@@ -57,5 +57,16 @@ const getallshopping_centerimagesbyid=(shopping_center_id,callback)=>{
         }
         callback(null,result[0]);
     });
-}
-module.exports={getallshopping_centers,getallshopping_centersbyId,addshopping_center,updateshopping_center,deleteshopping_center,getallshopping_centerimagesbyid};
+};
+const findshopping_centerstitle=(title,callback)=>{
+    const query='select * from shopping_centers where title like ?';
+    db.query(query,[`%${title}%`],(err,result)=>{
+        if(err)
+        {
+            return callback(err,null);
+        }
+        return callback(null,result);
+
+    });
+};
+module.exports={getallshopping_centers,getallshopping_centersbyId,addshopping_center,updateshopping_center,deleteshopping_center,getallshopping_centerimagesbyid,findshopping_centerstitle};

@@ -57,6 +57,17 @@ const getallcuisinesimagesbyid=(cuisines_id,callback)=>{
         }
         callback(null,result[0]);
     });
-}
-module.exports={getallcuisines,getallcuisinesbyId,addcuisines,getallcuisinesimagesbyid,updatecuisines,deletecuisines
+};
+const findcuisinestitle=(title,callback)=>{
+    const query='select * from cuisines where title like ?';
+    db.query(query,[`%${title}%`],(err,result)=>{
+        if(err)
+        {
+            return callback(err,null);
+        }
+        return callback(null,result);
+
+    });
+};
+module.exports={getallcuisines,getallcuisinesbyId,addcuisines,getallcuisinesimagesbyid,updatecuisines,deletecuisines,findcuisinestitle
 };

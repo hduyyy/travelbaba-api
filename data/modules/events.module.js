@@ -58,5 +58,16 @@ const getalleventimagesbyid=(event_id,callback)=>{
         }
         callback(null,result[0]);
     });
-}
-module.exports={getallevents,getalleventsbyId,addevent,updateevent,deleteevent,getalleventimagesbyid};
+};
+const findeventstitle=(title,callback)=>{
+    const query='select * from events where title like ?';
+    db.query(query,[`%${title}%`],(err,result)=>{
+        if(err)
+        {
+            return callback(err,null);
+        }
+        return callback(null,result);
+
+    });
+};
+module.exports={getallevents,getalleventsbyId,addevent,updateevent,deleteevent,getalleventimagesbyid,findeventstitle};

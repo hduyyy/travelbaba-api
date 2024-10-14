@@ -1,6 +1,12 @@
 const express=require('express');
 const router=express.Router();
 const movescontroller=require('../controller/moves.controller');
+const authmiddlewares=require('../auth/auth.middlewares');
 router.get('/api/moves',movescontroller.getallmoves);
 router.get('/api/moves/:moves_id',movescontroller.getallmovesbyId);
+router.get('/api/moves/:moves_id/images',authmiddlewares.verifyToken,movescontroller.getallmovesimgbyId);
+router.get('/api/moves/search',authmiddlewares.verifyToken,movescontroller.Findmovestitle);
+router.post('/api/moves',authmiddlewares.verifyToken,authmiddlewares.AuthAdmin,movescontroller.addmoves);
+router.put('/api/moves/:moves_id',authmiddlewares.verifyToken,authmiddlewares.AuthAdmin,movescontroller.updatemoves);
+router.delete('/api/moves/:moves_id',authmiddlewares.verifyToken,authmiddlewares.AuthAdmin,movescontroller.deletemoves);
 module.exports=router;

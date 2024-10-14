@@ -1,10 +1,12 @@
 const express=require('express');
 const router=express.Router();
 const eventscontroller=require('../controller/events.controller');
-router.get('/api/events',eventscontroller.getallevents);
-router.get('/api/events/:event_id',eventscontroller.getalleventsbyId);
-router.get('/api/events/:event_id/images',eventscontroller.getalleventsimgbyId);
-router.post('/api/events',eventscontroller.addevents);
-router.put('/api/events/:event_id',eventscontroller.updateevents);
-router.delete('/api/events/:event_id',eventscontroller.deleteevents);
+const authmiddlewares=require('../auth/auth.middlewares');
+router.get('/api/events',authmiddlewares.verifyToken,eventscontroller.getallevents);
+router.get('/api/events/:event_id',authmiddlewares.verifyToken,eventscontroller.getalleventsbyId);
+router.get('/api/events/:event_id/images',authmiddlewares.verifyToken,eventscontroller.getalleventsimgbyId);
+router.get('/api/events/search',authmiddlewares.verifyToken,eventscontroller.Findeventstitle);
+router.post('/api/events',authmiddlewares.verifyToken,authmiddlewares.AuthAdmin,eventscontroller.addevents);
+router.put('/api/events/:event_id',authmiddlewares.verifyToken,authmiddlewares.AuthAdmin,eventscontroller.updateevents);
+router.delete('/api/events/:event_id',authmiddlewares.verifyToken,authmiddlewares.AuthAdmin,eventscontroller.deleteevents);
 module.exports=router;

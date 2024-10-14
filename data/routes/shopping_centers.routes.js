@@ -1,10 +1,12 @@
 const express=require('express');
 const router=express.Router();
 const shopping_centerscontroller=require('../controller/shopping_centers.controller');
-router.get('/api/shopping_centers',shopping_centerscontroller.getallshopping_centers);
-router.get('/api/shopping_centers/:shopping_center_id',shopping_centerscontroller.getallshopping_centerssbyId);
-router.get('/api/shopping_centers/:shopping_center_id/images',shopping_centerscontroller.getallshopping_centersimgbyId);
-router.post('/api/shopping_centers',shopping_centerscontroller.addshopping_centers);
-router.put('/api/shopping_centers/:shopping_center_id',shopping_centerscontroller.updateshopping_centers);
-router.delete('/api/shopping_centers/:shopping_center_id',shopping_centerscontroller.deleteshopping_centers);
+const authmiddlewares=require('../auth/auth.middlewares');
+router.get('/api/shopping_centers',authmiddlewares.verifyToken,shopping_centerscontroller.getallshopping_centers);
+router.get('/api/shopping_centers/:shopping_center_id',authmiddlewares.verifyToken,shopping_centerscontroller.getallshopping_centerssbyId);
+router.get('/api/shopping_centers/:shopping_center_id/images',authmiddlewares.verifyToken,shopping_centerscontroller.getallshopping_centersimgbyId);
+router.get('/api/shopping_centers/search',authmiddlewares.verifyToken,shopping_centerscontroller.Findshopping_centerstitle);
+router.post('/api/shopping_centers',authmiddlewares.verifyToken,authmiddlewares.AuthAdmin,shopping_centerscontroller.addshopping_centers);
+router.put('/api/shopping_centers/:shopping_center_id',authmiddlewares.verifyToken,authmiddlewares.AuthAdmin,shopping_centerscontroller.updateshopping_centers);
+router.delete('/api/shopping_centers/:shopping_center_id',authmiddlewares.verifyToken,authmiddlewares.AuthAdmin,shopping_centerscontroller.deleteshopping_centers);
 module.exports=router;

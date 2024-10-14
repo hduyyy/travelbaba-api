@@ -59,4 +59,15 @@ const getallmoveimagesbyid=(moves_id,callback)=>{
         callback(null,result[0]);
     });
 };
-module.exports={getallmoves,getallmovesbyId,addmove,updatemove,deletemove,getallmoveimagesbyid};
+const findmovestitle=(title,callback)=>{
+    const query='select * from moves where title like ?';
+    db.query(query,[`%${title}%`],(err,result)=>{
+        if(err)
+        {
+            return callback(err,null);
+        }
+        return callback(null,result);
+
+    });
+};
+module.exports={getallmoves,getallmovesbyId,addmove,updatemove,deletemove,getallmoveimagesbyid,findmovestitle};

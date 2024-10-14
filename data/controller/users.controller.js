@@ -3,11 +3,11 @@ const getallusers=(req,res)=>{
     usersmodule.getallusers((err,result)=>{
         if(err)
         {
-            res.send(err);
+           return  res.status(500).json({code:500,message:"error getall user",err});
         }
         else
         {
-            res.json(result);
+            return  res.status(201).json({code:201,message:" Successfull  ",result});
         }
     });
 };
@@ -15,13 +15,13 @@ const getalluserssbyId=(req,res)=>{
     usersmodule.getallusersbyId(req.params.user_id,(err,result)=>{
         if(err)
         {
-            return res.send("error get userss by id",err);
+            return  res.status(500).json({code:500,message:"error getall user by id",err});
         }
         if(!result)
         {
-            res.send("users not found");
+            return  res.status(404).json({code:404,message:"users not found",err});
         }
-        res.json(result);
+        return  res.status(201).json({code:201,message:" Successfull  ",result});
     });
 };
 const getalluserssbyphone=(req,res)=>{

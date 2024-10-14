@@ -26,11 +26,11 @@ const getallevents=(req,res)=>{
     eventsmodule.getallevents((err,result)=>{
         if(err)
         {
-            res.send(err);
+            return res.status(404).json({code:404,message:'Error get all events ',err});
         }
         else
         {
-            res.json(result);
+            return res.status(201).json({code:201,message:'Successfull',result});
         }
     });
 };
@@ -38,14 +38,14 @@ const getalleventsbyId=(req,res)=>{
     eventsmodule.getalleventsbyId(req.params.event_id,(err,result)=>{
         if(err)
         {
-            return res.send("error get all events by id");
+            return res.status(500).json({code:500,message:'Error get all events by id',err});
 
         }
         if(!result)
         {
-            return res.send("error get all events by id not found");
+            return res.status(404).json({code:404,message:' events not found'});
         }
-        res.json(result);
+        return res.status(201).json({code:201,message:'Successfull',result});
     });
 };
 const addevents=(req,res)=>{
@@ -171,5 +171,19 @@ const deleteevents=(req,res)=>{
         }
         res.status(201).json({code:201,message:'Delete events Successfull',result});
     });
-}
-module.exports={getallevents,getalleventsbyId,addevents,updateevents,deleteevents,getalleventsimgbyId};
+};
+const Findeventstitle=(req,res)=>{
+    const {title}=req.body;
+    if(!title)
+    {
+        return res.status(404).json({code:404, message: "error while input events title" });
+    }
+    eventsmodule.findeventstitle(title,(err,result)=>{
+        if(err)
+        {
+            return res.status(500).json({code:500, message: "Error find events title", error:err });
+        }
+        return res.status(201).json({code:201,message:'Find success', data:result});
+    });
+};
+module.exports={getallevents,getalleventsbyId,addevents,updateevents,deleteevents,getalleventsimgbyId,Findeventstitle};

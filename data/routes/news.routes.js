@@ -1,10 +1,12 @@
 const express=require('express');
 const router=express.Router();
 const newscontroller=require('../controller/news.controller');
-router.get('/api/news',newscontroller.getallnews);
-router.get('/api/news/:news_id',newscontroller.getallnewssbyId);
-router.get('/api/news/:news_id/images',newscontroller.getallnewsimgbyId);
-router.post('/api/news',newscontroller.addnews);
-router.put('/api/news/:news_id',newscontroller.updatenews);
-router.delete('/api/news/:news_id',newscontroller.deletenews);
+const authmiddlewares=require('../auth/auth.middlewares');
+router.get('/api/news',authmiddlewares.verifyToken,newscontroller.getallnews);
+router.get('/api/news/:news_id',authmiddlewares.verifyToken,newscontroller.getallnewssbyId);
+router.get('/api/users/search',authmiddlewares.verifyToken,newscontroller.Findnewtitle);
+router.get('/api/news/:news_id/images',authmiddlewares.verifyToken,newscontroller.getallnewsimgbyId);
+router.post('/api/news',authmiddlewares.verifyToken,authmiddlewares.AuthAdmin,newscontroller.addnews);
+router.put('/api/news/:news_id',authmiddlewares.verifyToken,authmiddlewares.AuthAdmin,newscontroller.updatenews);
+router.delete('/api/news/:news_id',authmiddlewares.verifyToken,authmiddlewares.AuthAdmin,newscontroller.deletenews);
 module.exports=router;

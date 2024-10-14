@@ -26,11 +26,11 @@ const getallnews=(req,res)=>{
     newsmodule.getallnews((err,result)=>{
         if(err)
         {
-            res.send(err);
+            return res.status(500).json({code:500,message:' error at get all news',err});
         }
         else
         {
-            res.json(result);
+            return res.status(201).json({code:201,message:'Successfull',result});
         }
     });
 };
@@ -38,11 +38,11 @@ const getallnewssbyId=(req,res)=>{
     newsmodule.getallnewsbyId(req.params.news_id,(err,result)=>{
         if(err)
         {
-            return res.send("error get newss by id",err);
+            return res.status(500).json({code:500,message:' error at get all news by id',err});
         }
         if(!result)
         {
-            res.send("news not found");
+            return res.status(201).json({code:201,message:'Successfull',result});
         }
         res.json(result);
     });
@@ -160,4 +160,18 @@ const deletenews=(req,res)=>{
         res.status(201).json({code:201,message:'Delete news Successfull',result});
     });
 };
-module.exports={getallnews,getallnewssbyId,addnews,updatenews,deletenews,getallnewsimgbyId};
+const Findnewtitle=(req,res)=>{
+    const {title}=req.body;
+    if(!title)
+    {
+        return res.status(404).json({code:404, message: "error while input news title" });
+    }
+    newsmodule.findnewstitle(title,(err,result)=>{
+        if(err)
+        {
+            return res.status(500).json({code:500, message: "Error find news title", error:err });
+        }
+        return res.status(201).json({code:201,message:'Find success', data:result});
+    });
+};
+module.exports={getallnews,getallnewssbyId,addnews,updatenews,deletenews,getallnewsimgbyId,Findnewtitle};

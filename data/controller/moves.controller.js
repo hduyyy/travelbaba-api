@@ -26,11 +26,11 @@ const getallmoves=(req,res)=>{
     movesmodule.getallmoves((err,result)=>{
         if(err)
         {
-            res.send(err);
+            return res.status(500).json({code:500,message:'error get all moves',err});
         }
         else
         {
-            res.json(result);
+            return res.status(201).json({code:201,message:'Successfull',result});
         }
     });
 };
@@ -38,13 +38,13 @@ const getallmovesbyId=(req,res)=>{
     movesmodule.getallmovesbyId(req.params.moves_id,(err,result)=>{
         if(err)
         {
-           return res.send("error get all moves by id");
+            return res.status(500).json({code:500,message:'error get all moves by id',err});
         }
         if(!result)
         {
-           return res.send("moves_id not found");
+            return res.status(404).json({code:404,message:'moves_id not found'});
         }
-        res.json(result);
+        return res.status(201).json({code:201,message:'Successfull',result});
     });
 };
 const addmoves=(req,res)=>{
@@ -160,4 +160,18 @@ const deletemoves=(req,res)=>{
         res.status(201).json({code:201,message:'Delete moves Successfull',result});
     });
 };
-module.exports={getallmoves,getallmovesbyId,addmoves,updatemoves,deletemoves,getallmovesimgbyId};
+const Findmovestitle=(req,res)=>{
+    const {title}=req.body;
+    if(!title)
+    {
+        return res.status(404).json({code:404, message: "error while input moves title" });
+    }
+    movesmodule.findmovestitle(title,(err,result)=>{
+        if(err)
+        {
+            return res.status(500).json({code:500, message: "Error find moves title", error:err });
+        }
+        return res.status(201).json({code:201,message:'Find success', data:result});
+    });
+};
+module.exports={getallmoves,getallmovesbyId,addmoves,updatemoves,deletemoves,Findmovestitle,getallmovesimgbyId};

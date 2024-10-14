@@ -27,4 +27,5 @@ const AuthUser=(req,res,next)=>{
     }
     next();
 };
+
 module.exports={verifyToken,AuthAdmin,AuthUser}

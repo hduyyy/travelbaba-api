@@ -59,4 +59,15 @@ const getallnewsimagesbyid=(news_id,callback)=>{
         callback(null,result[0]);
     });
 };
-module.exports={getallnews,getallnewsbyId,Addnews,updatenews,deletenews,getallnewsimagesbyid};
+const findnewstitle=(title,callback)=>{
+    const query='select * from news where title like ?';
+    db.query(query,[`%${title}%`],(err,result)=>{
+        if(err)
+        {
+            return callback(err,null);
+        }
+        return callback(null,result);
+
+    });
+};
+module.exports={getallnews,getallnewsbyId,Addnews,updatenews,deletenews,getallnewsimagesbyid,findnewstitle};

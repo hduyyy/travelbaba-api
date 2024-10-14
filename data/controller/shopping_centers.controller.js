@@ -27,11 +27,11 @@ const getallshopping_centers=(req,res)=>{
     shopping_centersmodule.getallshopping_centers((err,result)=>{
         if(err)
         {
-            res.send(err);
+            return res.status(404).json({code:404,message:'Error get all shopping_centers ',err});
         }
         else
         {
-            res.json(result);
+            return res.status(201).json({code:201,message:'Successfull',result});
         }
     });
 };
@@ -39,13 +39,13 @@ const getallshopping_centerssbyId=(req,res)=>{
     shopping_centersmodule.getallshopping_centersbyId(req.params.shopping_center_id,(err,result)=>{
         if(err)
         {
-            return res.send("error get shopping_centerss by id",err);
+            return res.status(500).json({code:500,message:'Error get all shopping_centers by id',err});
         }
         if(!result)
         {
-            res.send("shopping_centers not found");
+            return res.status(404).json({code:404,message:' shopping_centers not found'});
         }
-        res.json(result);
+        return res.status(201).json({code:201,message:'Successfull',result});
     });
 };
 const addshopping_centers=(req,res)=>{
@@ -171,5 +171,19 @@ const deleteshopping_centers=(req,res)=>{
         }
         res.status(201).json({code:201,message:'Delete shopping_centers Successfull',result});
     });
-}
-module.exports={getallshopping_centers,getallshopping_centerssbyId,addshopping_centers,updateshopping_centers,deleteshopping_centers,getallshopping_centersimgbyId};
+};
+const Findshopping_centerstitle=(req,res)=>{
+    const {title}=req.body;
+    if(!title)
+    {
+        return res.status(404).json({code:404, message: "error while input shopping_centers title" });
+    }
+    shopping_centersmodule.findshopping_centerstitle(title,(err,result)=>{
+        if(err)
+        {
+            return res.status(500).json({code:500, message: "Error find shopping_centers title", error:err });
+        }
+        return res.status(201).json({code:201,message:'Find success', data:result});
+    });
+};
+module.exports={getallshopping_centers,getallshopping_centerssbyId,addshopping_centers,updateshopping_centers,deleteshopping_centers,getallshopping_centersimgbyId,Findshopping_centerstitle};

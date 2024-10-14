@@ -57,5 +57,16 @@ const getalltourimagesbyid=(tour_id,callback)=>{
         }
         callback(null,result[0]);
     });
-}
-module.exports={getalltours,getalltoursbyId,addtour,updatetour,deletetour,getalltourimagesbyid};
+};
+const findtourtitle=(title,callback)=>{
+    const query='select * from tours where title like ?';
+    db.query(query,[`%${title}%`],(err,result)=>{
+        if(err)
+        {
+            return callback(err,null);
+        }
+        return callback(null,result);
+
+    });
+};
+module.exports={getalltours,getalltoursbyId,addtour,updatetour,deletetour,getalltourimagesbyid,findtourtitle};

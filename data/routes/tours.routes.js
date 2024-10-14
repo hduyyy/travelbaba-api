@@ -1,10 +1,12 @@
 const express=require('express');
 const router=express.Router();
 const tourscontroller=require('../controller/tours.controller');
-router.get('/api/tours',tourscontroller.getalltours);
-router.get('/api/tours/:tour_id',tourscontroller.getalltourssbyId);
-router.get('/api/tours/:tour_id/images',tourscontroller.getalltoursimgbyId);
-router.post('/api/tours',tourscontroller.addtours);
-router.put('/api/cuisines/:tour_id',tourscontroller.updatetours);
-router.delete('/api/cuisines/:tour_id',tourscontroller.deletetours);
+const authmiddlewares=require('../auth/auth.middlewares');
+router.get('/api/tours',authmiddlewares.verifyToken,tourscontroller.getalltours);
+router.get('/api/tours/:tour_id',authmiddlewares.verifyToken,tourscontroller.getalltourssbyId);
+router.get('/api/tours/search',authmiddlewares.verifyToken,tourscontroller.Findtourstitle);
+router.get('/api/tours/:tour_id/images',authmiddlewares.verifyToken,tourscontroller.getalltoursimgbyId);
+router.post('/api/tours',authmiddlewares.verifyToken,authmiddlewares.AuthAdmin,tourscontroller.addtours);
+router.put('/api/cuisines/:tour_id',authmiddlewares.verifyToken,authmiddlewares.AuthAdmin,tourscontroller.updatetours);
+router.delete('/api/cuisines/:tour_id',authmiddlewares.verifyToken,authmiddlewares.AuthAdmin,tourscontroller.deletetours);
 module.exports=router;

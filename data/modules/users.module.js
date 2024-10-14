@@ -128,6 +128,6 @@ const findfullname=(full_name,callback)=>{
         }
         return callback(null,result);
 
-    })
-}
+    });
+};
 module.exports={getallusers,getallusersbyId,adduser,updateuser,deleteuser,getallusersbyphone,getallusersbyusername,getallusersbyFreshtoken,getallusersbyemail,updateRefreshToken,getusersbyuser_nameemail,updatePassword,findfullname};

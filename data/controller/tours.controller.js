@@ -28,11 +28,12 @@ const getalltours=(req,res)=>{
     toursmodule.getalltours((err,result)=>{
         if(err)
         {
-            res.send(err);
+            return res.status(500).json({code:500, message: "error get all tours ",err });
+
         }
         else
         {
-            res.json(result);
+            return res.status(201).json({code:201, message: "successfull" ,result});
         }
     });
 };
@@ -40,13 +41,13 @@ const getalltourssbyId=(req,res)=>{
     toursmodule.getalltoursbyId(req.params.tour_id,(err,result)=>{
         if(err)
         {
-            return res.send("error get tourss by id",err);
+            return res.status(500).json({code:500, message: "error get all tours by id ",err });
         }
         if(!result)
         {
-            res.send("tours not found");
+            return res.status(404).json({code:404, message: "tours not found " });
         }
-        res.json(result);
+     res.status(201).json({code:201, message: "successfull" ,result});
     });
 };
 const addtours=(req,res)=>{
@@ -191,5 +192,19 @@ const deletetours=(req,res)=>{
         }
         res.status(201).json({code:201,message:'Delete tours Successfull',result});
     });
+};
+const Findtourstitle=(req,res)=>{
+    const {title}=req.body;
+    if(!title)
+    {
+        return res.status(404).json({code:404, message: "error while input tours title" });
+    }
+    toursmodule.findtourtitle(title,(err,result)=>{
+        if(err)
+        {
+            return res.status(500).json({code:500, message: "Error find tours title", error:err });
+        }
+        return res.status(201).json({code:201,message:'Find success', data:result});
+    })
 }
-module.exports={getalltours,getalltourssbyId,addtours,updatetours,deletetours,getalltoursimgbyId};
+module.exports={getalltours,getalltourssbyId,addtours,updatetours,deletetours,getalltoursimgbyId,Findtourstitle};

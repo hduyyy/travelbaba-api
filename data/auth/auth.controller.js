@@ -70,7 +70,7 @@ const  authLogin= (req,res)=>{
             
             if(!password_user)
             {
-                return res.status(404).json({code:404,message:'Password fail'});
+                return res.status(404).json({code:404,message:'Password is not correct'});
             }
             const accessTokenLife=process.env.JWT_TOKEN_LIFE;
             const accessTokenSecret=process.env.JWT_SECRET;
@@ -155,4 +155,31 @@ const resetPassword=(req,res)=>{
         });
       });
 };
-module.exports={authRegister,authLogin,refreshAccessToken,forgotPassword,resetPassword};
+const ChangePassword=(req,res)=>{
+    const{oldPassword,newPassword}=req.body;
+    const username=req.user.username;
+    console.log(req.user);
+    usersmodule.getallusersbyusername(username,(err,user)=>{
+        if(err||!user)
+        {
+            return res.status(404).json({code:404, message: 'User not found!' });
+        }
+        const passwordvalid=bcrypt.compareSync(oldPassword,user.password);
+        if(!passwordvalid)
+        {
+            return res.status(404).json({code:404, message: ' Old password is not correct' });
+        }
+        const hashedPassword=bcrypt.hashSync(newPassword,10);
+        user.password=hashedPassword;
+        usersmodule.updatePassword(username,hashedPassword,(err)=>{
+            if(err)
+            {
+                return res.status(500).json({code:500, message: ' Error while change password' });
+            }
+             res.status(200).json({code:200, message: ' Change password successfull!' });
+
+        })
+
+    });
+};
+module.exports={authRegister,authLogin,refreshAccessToken,forgotPassword,resetPassword,ChangePassword};
