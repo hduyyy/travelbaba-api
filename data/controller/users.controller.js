@@ -1,4 +1,5 @@
 const usersmodule=require('../modules/users.module');
+const bcrypt=require('bcryptjs');
 const getallusers=(req,res)=>{
     usersmodule.getallusers((err,result)=>{
         if(err)
@@ -43,7 +44,7 @@ const addusers=(req,res)=>{
         user_name:req.body.user_name,
         full_name:req.body.full_name,
         email:req.body.email,
-        password:req.body.password,
+        password:bcrypt.hashSync(req.body.password,10),
         phone:req.body.phone,
         role:req.body.role
     }
@@ -59,10 +60,11 @@ const addusers=(req,res)=>{
 const updateusers=(req,res)=>{
     console.log('body',req.body);
     const updated_user={
+        user_name:req.body.user_name,
         full_name:req.body.full_name,
         homestay_id:req.body.homestay_id,
         email:req.body.email,
-        password:req.body.password,
+        password:bcrypt.hashSync(req.body.password,10),
         phone:req.body.phone,
         updated_at:new Date(),
         role:req.body.role

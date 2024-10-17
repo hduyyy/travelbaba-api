@@ -10,8 +10,8 @@ const getallnews=(callback)=>{
     });
 };
 const getallnewsbyId=( news_id,callback)=>{
-    const query='select * from newss where newss_id=?';
-    db.query(query,[ newss_id],(err,result)=>{
+    const query='select * from news where news_id=?';
+    db.query(query,[ news_id],(err,result)=>{
         if(err)
         {
             return callback(err,null);

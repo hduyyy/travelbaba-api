@@ -30,7 +30,7 @@ const addevent=(event,callback)=>{
     });
 };
 const updateevent=(event_id,event,callback)=>{
-    const query='update events set title=?,address=?,description=?,closing_time=?,opening_hours=?,event_image=?,content_image=? where event_id=?';
+    const query='update events set title=?,description=?,closing_time_event=?,opening_hours_event=?,views=?,content=?,event_image=?,content_image=? where event_id=?';
     db.query(query,[event.title,event.description,event.closing_time_event,event.opening_hours_event,event.views,event.content,event.event_image,event.content_image,event_id],(err,result)=>{
         if(err)
         {

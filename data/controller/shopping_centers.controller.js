@@ -104,15 +104,15 @@ const updateshopping_centers=(req,res)=>{
             return res.status.json({code:500,message:'Error upload file',error:err});
         }
         let shopping_centersImg=null;
-        if(req.files['shopping_centers_image']&&req.files['shopping_centers_image'].length>0)
+        if(req.files['shopping_center_image']&&req.files['shopping_center_image'].length>0)
         {
-            shopping_centersImg=req.files['shopping_centers_images'][0].filename;
+            shopping_centersImg=req.files['shopping_center_image'][0].filename;
         }
         let contentImg =  null;
         
         if(req.files['content_image']&&req.files['content_image'].length>0)
         {
-            contentImg=req.files['content_images'][0].filename;
+            contentImg=req.files['content_image'][0].filename;
         }
         let closing_time_shopping_center = req.body.closing_time_shopping_center || new Date().toISOString().slice(0, 19).replace('T', ' ');
         let opening_hours_shopping_center = req.body.opening_hours_shopping_center || new Date().toISOString().slice(0, 19).replace('T', ' ');

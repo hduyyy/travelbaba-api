@@ -71,8 +71,8 @@ const getusersbyuser_nameemail=(email,user_name,callback)=>{
 
 
 const adduser=(users,callback)=>{
-    const query='insert into users (user_name,full_name,email,password,phone,role,refresh_token) values (?,?,?,?,?,?,?)';
-    db.query(query,[users.user_name,users.full_name,users.email,users.password,users.phone,users.role,users.refresh_token],(err,result)=>{
+    const query='insert into users (user_name,full_name,email,password,phone,role) values (?,?,?,?,?,?)';
+    db.query(query,[users.user_name,users.full_name,users.email,users.password,users.phone,users.role],(err,result)=>{
         if(err)
         {         
             return callback(err,null);
@@ -130,4 +130,13 @@ const findfullname=(full_name,callback)=>{
 
     });
 };
-module.exports={getallusers,getallusersbyId,adduser,updateuser,deleteuser,getallusersbyphone,getallusersbyusername,getallusersbyFreshtoken,getallusersbyemail,updateRefreshToken,getusersbyuser_nameemail,updatePassword,findfullname};
+const updateRoleUser=(user_id,newRole,callback)=>{
+    const query='update users set role =? where user_id=?';
+    db.query(query,[newRole,user_id],(err,result)=>{
+        if (err) {
+            return callback(err, null);
+        }
+        callback(null, result);
+    })
+}
+module.exports={getallusers,getallusersbyId,adduser,updateuser,deleteuser,getallusersbyphone,getallusersbyusername,getallusersbyFreshtoken,getallusersbyemail,updateRefreshToken,getusersbyuser_nameemail,updatePassword,findfullname,updateRoleUser};

@@ -6,7 +6,7 @@ router.get('/api/events',authmiddlewares.verifyToken,eventscontroller.getalleven
 router.get('/api/events/:event_id',authmiddlewares.verifyToken,eventscontroller.getalleventsbyId);
 router.get('/api/events/:event_id/images',authmiddlewares.verifyToken,eventscontroller.getalleventsimgbyId);
 router.get('/api/events/search',authmiddlewares.verifyToken,eventscontroller.Findeventstitle);
-router.post('/api/events',authmiddlewares.verifyToken,authmiddlewares.AuthAdmin,eventscontroller.addevents);
+router.post('/api/events',authmiddlewares.verifyToken,eventscontroller.addevents);
 router.put('/api/events/:event_id',authmiddlewares.verifyToken,authmiddlewares.AuthAdmin,eventscontroller.updateevents);
 router.delete('/api/events/:event_id',authmiddlewares.verifyToken,authmiddlewares.AuthAdmin,eventscontroller.deleteevents);
 module.exports=router;

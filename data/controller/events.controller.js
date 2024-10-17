@@ -112,7 +112,7 @@ const updateevents=(req,res)=>{
         
         if(req.files['content_image']&&req.files['content_image'].length>0)
         {
-            contentImg=req.files['content_images'][0].filename;
+            contentImg=req.files['content_image'][0].filename;
         }
         let closing_time_event = req.body.closing_time_event || new Date().toISOString().slice(0, 19).replace('T', ' ');
         let opening_hours_event = req.body.opening_hours_event || new Date().toISOString().slice(0, 19).replace('T', ' ');

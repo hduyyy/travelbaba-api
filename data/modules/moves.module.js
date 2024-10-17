@@ -30,7 +30,7 @@ const addmove=(move,callback)=>{
     });
 };
 const updatemove=(moves_id,move,callback)=>{
-    const query='update moves set title=?,address=?,description=?,closing_time=?,opening_hours=?,moves_image=?,content_image=? where move_id=?';
+    const query='update moves set title=?,address=?,description=?,type_vehicle=?,moves_image=?,content_image=? where moves_id=?';
     db.query(query,[move.title,move.address,move.description,move.type_vehicle,move.moves_image,move.content_image,moves_id],(err,result)=>{
         if(err)
         {

@@ -98,13 +98,13 @@ const updatemoves=(req,res)=>{
         let movesImg=null;
         if(req.files['moves_image']&&req.files['moves_image'].length>0)
         {
-            movesImg=req.files['moves_images'][0].filename;
+            movesImg=req.files['moves_image'][0].filename;
         }
         let contentImg =  null;
         
         if(req.files['content_image']&&req.files['content_image'].length>0)
         {
-            contentImg=req.files['content_images'][0].filename;
+            contentImg=req.files['content_image'][0].filename;
         }
         const Updatemoves={
             title:req.body.title,

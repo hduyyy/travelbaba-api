@@ -18,4 +18,7 @@ const authmiddlewares=require('./auth.middlewares');
 router.post('/reset-password', authController.resetPassword);
 router.post('/change-password',authmiddlewares.verifyToken, authController.ChangePassword);
 
+router.put('/updaterole/:user_id', authmiddlewares.verifyToken, authController.UpdateRole);
+
+
 module.exports=router;

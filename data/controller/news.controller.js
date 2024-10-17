@@ -42,10 +42,9 @@ const getallnewssbyId=(req,res)=>{
         }
         if(!result)
         {
-            return res.status(201).json({code:201,message:'Successfull',result});
+            return res.status(404).json({code:404,message:'  news by id not found',err});
         }
-        res.json(result);
-    });
+        return res.status(201).json({code:201,message:'Successfull',result});    });
 };
 const addnews=(req,res)=>{
     upload(req,res,(err)=>{
@@ -98,13 +97,13 @@ const updatenews=(req,res)=>{
         let newsImg=null;
         if(req.files['news_image']&&req.files['news_image'].length>0)
         {
-            newsImg=req.files['news_images'][0].filename;
+            newsImg=req.files['news_image'][0].filename;
         }
         let contentImg =  null;
         
         if(req.files['content_image']&&req.files['content_image'].length>0)
         {
-            contentImg=req.files['content_images'][0].filename;
+            contentImg=req.files['content_image'][0].filename;
         }
         const Updatenews={
             title:req.body.title,

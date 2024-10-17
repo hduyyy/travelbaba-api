@@ -95,19 +95,20 @@ const  authLogin= (req,res)=>{
 };
 const refreshAccessToken=(req,res)=>{
     const refreshToken=req.body.refresh_token;
+    console.log(refreshToken);
     if(!refreshToken)
     {
         return res.status(404).json({ code: 404, message: 'Refresh token not input' });
 
     }
     usersmodule.getallusersbyFreshtoken(refreshToken,(err,result)=>{
-        if(err|| result)
+        if(err|| !result)
         {
             return res.status(404).json({ code: 404, message: 'Refresh token is not valid' });
         }
         const accessTokenLife=process.env.JWT_TOKEN_LIFE;
             const accessTokenSecret=process.env.JWT_SECRET;
-            const tokenData={username:username.user_name,id:username.user_id,role:username.role};
+            const tokenData={username:result.user_name,id:result.user_id,role:result .role};
             const accessToken=jwt.sign(tokenData,accessTokenSecret,{expiresIn:accessTokenLife});
             res.status(201).json({code:201,message:'Access token refreshed',accessToken});
     });
@@ -125,7 +126,7 @@ const forgotPassword=(req,res)=>{
         const resetCode= Math.floor(100000 + Math.random() * 900000).toString();
         resetCodes[user_name]={
             code: resetCode,
-      expiry: Date.now() + 600000
+      expiry: Date.now() + 60000
         };
         emailservices.sendResetCode(email,resetCode);
         res.json({ message: "Reset code sent to email" });
@@ -182,4 +183,22 @@ const ChangePassword=(req,res)=>{
 
     });
 };
-module.exports={authRegister,authLogin,refreshAccessToken,forgotPassword,resetPassword,ChangePassword};
+const UpdateRole=(req,res)=>{
+    const {newRole}=req.body;
+    // if(req.user.role!=="admin")
+    // {
+    //     return res.status(404).json({ code: 404, message: 'You not admin' });
+    // }
+    if(!["admin","user"].includes(newRole))
+    {
+        return res.status(400).json({ code: 400, message: 'Just admin or user' });
+    }
+    usersmodule.updateRoleUser(req.params.user_id,newRole,(err,result)=>{
+        if (err) {
+            return res.status(500).json({ code: 500, message: 'Error updating role', error: err });
+        }
+        res.status(201).json({ code: 201, message: 'Role updated successfully' });
+
+    })
+}
+module.exports={authRegister,authLogin,refreshAccessToken,forgotPassword,resetPassword,ChangePassword,UpdateRole};
